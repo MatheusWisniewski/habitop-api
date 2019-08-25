@@ -26,9 +26,6 @@ public interface CheckedDateRepo extends JpaRepository<CheckedDate, Long> {
 	@Query("SELECT c FROM CheckedDate c WHERE c.id=:x")
 	public CheckedDate findCheckedDateById(@Param("x") Long id);
 	
-	@Query("SELECT c FROM CheckedDate c WHERE c.previousId=:x")
-	public CheckedDate findCheckedDateByPreviousId(@Param("x") Long previousId);
-	
 	@Query("SELECT c FROM CheckedDate c "
 			+ "WHERE date_format(date(c.date), '%Y-%m-%d') = date_format(date(:date), '%Y-%m-%d')"
 			+ "		AND c.habit.id = :habit_id")

@@ -19,7 +19,9 @@ public interface CheckedDateService {
 	
 	public CheckedDate getCheckedDateById(Long id);
 	
-	public CheckedDate getCheckedDateByPreviousId(Long previousId);
-	
 	public CheckedDate getCheckedDateByDate(Date date, Long habitId);
+	
+	public CheckedDate getNextCheckedDate(CheckedDate c);
+	
+	public List<CheckedDate> updateSubsequentCheckedDates(CheckedDate checkedDate);
 }

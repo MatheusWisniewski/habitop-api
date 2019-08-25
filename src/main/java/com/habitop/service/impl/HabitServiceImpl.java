@@ -1,6 +1,5 @@
 package com.habitop.service.impl;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -10,9 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.habitop.model.AppUser;
-import com.habitop.model.CheckedDate;
 import com.habitop.model.Habit;
-//import com.habitop.model.Weekday;
 import com.habitop.repo.HabitRepo;
 import com.habitop.service.HabitService;
 
