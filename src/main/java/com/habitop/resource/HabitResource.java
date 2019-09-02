@@ -25,21 +25,18 @@ public class HabitResource {
 
 	@Autowired
 	private HabitService habitService;
-	
+
 	@Autowired
 	private CheckedDateService checkedDateService;
-	
+
 	@PutMapping("/{id}")
-	public ResponseEntity<?> updateHabit(
-		@PathVariable("id") Long id, 
-		@RequestBody Habit habit
-	) {
+	public ResponseEntity<?> updateHabit(@PathVariable("id") Long id, @RequestBody Habit habit) {
 		Habit dbHabit = habitService.getHabitById(id);
-		
+
 		if (dbHabit == null) {
 			return new ResponseEntity<>("Nenhum hábito encontrado com id = " + id, HttpStatus.NOT_FOUND);
 		}
-		
+
 		try {
 			habit.setAppUser(dbHabit.getAppUser());
 			habit.setCheckedDates(dbHabit.getCheckedDates());
@@ -49,18 +46,15 @@ public class HabitResource {
 			return new ResponseEntity<>("Ocorreu um erro.", HttpStatus.BAD_REQUEST);
 		}
 	}
-	
-	
+
 	@DeleteMapping("/{id}")
-	public ResponseEntity<?> deleteHabit(
-		@PathVariable("id") Long id
-	) {
+	public ResponseEntity<?> deleteHabit(@PathVariable("id") Long id) {
 		Habit dbHabit = habitService.getHabitById(id);
-		
+
 		if (dbHabit == null) {
 			return new ResponseEntity<>("Nenhum hábito encontrado com id = " + id, HttpStatus.NOT_FOUND);
 		}
-		
+
 		try {
 			habitService.deleteHabit(dbHabit);
 			return new ResponseEntity<>(null, HttpStatus.OK);
@@ -68,26 +62,23 @@ public class HabitResource {
 			return new ResponseEntity<>("Ocorreu um erro.", HttpStatus.BAD_REQUEST);
 		}
 	}
-	
+
 	@PostMapping("/{id}/checked-dates")
-	public ResponseEntity<?> createCheckedDate(
-		@PathVariable("id") Long id, 
-		@RequestBody CheckedDate checkedDate
-	) {
+	public ResponseEntity<?> createCheckedDate(@PathVariable("id") Long id, @RequestBody CheckedDate checkedDate) {
 		Habit habit = habitService.getHabitById(id);
-		
+
 		if (habit == null) {
 			return new ResponseEntity<>("Nenhum hábito encontrado com id = " + id, HttpStatus.NOT_FOUND);
 		}
-		
+
 		try {
 			List<CheckedDate> response = new ArrayList<CheckedDate>();
-			
+
 			CheckedDate newCheckedDate = checkedDateService.saveCheckedDate(habit, checkedDate);
 			response.add(newCheckedDate);
-			
+
 			response.addAll(checkedDateService.updateSubsequentCheckedDates(newCheckedDate));
-			
+
 			return new ResponseEntity<>(response, HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>("Ocorreu um erro.", HttpStatus.BAD_REQUEST);

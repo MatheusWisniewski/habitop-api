@@ -19,31 +19,26 @@ import com.habitop.service.CheckedDateService;
 @RequestMapping("/checked-dates")
 public class CheckedDateResource {
 
-	
 	@Autowired
 	private CheckedDateService checkedDateService;
-	
 
 	@PutMapping("/{id}")
-	public ResponseEntity<?> updateCheckedDate(
-			@PathVariable("id") Long id, 
-			@RequestBody CheckedDate checkedDate
-	) {
-		
+	public ResponseEntity<?> updateCheckedDate(@PathVariable("id") Long id, @RequestBody CheckedDate checkedDate) {
+
 		CheckedDate dbCheckedDate = checkedDateService.getCheckedDateById(id);
-		
+
 		if (dbCheckedDate == null) {
 			return new ResponseEntity<>("Nenhum check encontrado com id = " + id, HttpStatus.NOT_FOUND);
 		}
-		
+
 		try {
 			List<CheckedDate> response = new ArrayList<CheckedDate>();
 			checkedDate.setHabit(dbCheckedDate.getHabit());
 			CheckedDate updatedCheckedDate = checkedDateService.updateCheckedDate(checkedDate);
 			response.add(updatedCheckedDate);
-			
+
 			response.addAll(checkedDateService.updateSubsequentCheckedDates(updatedCheckedDate));
-			
+
 			return new ResponseEntity<>(response, HttpStatus.OK);
 		} catch (Exception e) {
 			return new ResponseEntity<>("Ocorreu um erro.", HttpStatus.BAD_REQUEST);

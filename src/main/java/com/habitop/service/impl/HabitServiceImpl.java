@@ -19,7 +19,7 @@ public class HabitServiceImpl implements HabitService {
 
 	@Autowired
 	private HabitRepo habitRepo;
-	
+
 	@Override
 	public Habit saveHabit(AppUser appUser, Habit habit) {
 		habit.setCreatedDate(new Date());
@@ -28,7 +28,7 @@ public class HabitServiceImpl implements HabitService {
 		habitRepo.save(habit);
 		return habit;
 	}
-	
+
 	@Override
 	public Habit updateHabit(Habit habit) {
 		habitRepo.save(habit);

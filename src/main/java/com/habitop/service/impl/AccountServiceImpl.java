@@ -16,16 +16,11 @@ import com.habitop.service.AccountService;
 @Transactional
 public class AccountServiceImpl implements AccountService {
 
-//	@Autowired
-//	private BCryptPasswordEncoder passwordEncoder;
-	
 	@Autowired
 	private AppUserRepo appUserRepo;
-	
+
 	@Override
 	public AppUser saveUser(String email, String password) {
-//		String encryptedPassword = passwordEncoder.encode(appUser.getPassword());
-//		appUser.setPassword(encryptedPassword);
 		AppUser appUser = new AppUser();
 		appUser.setEmail(email);
 		appUser.setPassword(password);
@@ -41,8 +36,6 @@ public class AccountServiceImpl implements AccountService {
 
 	@Override
 	public void updateUser(AppUser appUser) {
-//		String encryptedPassword = passwordEncoder.encode(appUser.getPassword());
-//		appUser.setPassword(encryptedPassword);
 		appUserRepo.save(appUser);
 	}
 
@@ -54,18 +47,5 @@ public class AccountServiceImpl implements AccountService {
 	@Override
 	public void deleteUser(AppUser appUser) {
 		appUserRepo.delete(appUser);
-	}
-
-	@Override
-	public void resetPassword(AppUser appUser) {
-//		String encryptedPassword = passwordEncoder.encode(appUser.getPassword());
-//		appUser.setPassword(encryptedPassword);
-		appUserRepo.save(appUser);
-	}
-
-	@Override
-	public AppUser simpleSave(AppUser appUser) {
-		appUserRepo.save(appUser);
-		return appUser;
 	}
 }
